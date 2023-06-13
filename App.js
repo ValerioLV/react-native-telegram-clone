@@ -5,7 +5,7 @@ import Homepage from "./src/screens/Homepage";
 import Login from "./src/screens/Login";
 import Register from "./src/screens/Register";
 import AddChat from "./src/screens/AddChat";
-import { View, Text } from "react-native";
+import Chat from "./src/screens/Chat";
 
 export default function App() {
 	const Stack = createNativeStackNavigator();
@@ -33,6 +33,10 @@ export default function App() {
 				<Stack.Screen
 					name="AddChat"
 					component={AddChat}
+				/>
+				<Stack.Screen
+					name="Chat"
+					component={Chat}
 				/>
 			</Stack.Navigator>
 		</NavigationContainer>

@@ -18,15 +18,15 @@ const AddChat = ({ navigation }) => {
 
 	const chatAndUserExist = (neededUsername) => {
 		if (
-			chatSnapshot?.docs.find(
+			chatSnapshot?.docs.includes(
 				(chat) =>
 					chat.data().users.find((user) => user === neededUsername)?.length > 0,
 			) &&
-			usersSnapshot?.docs.find((user) => user === neededUsername)
+			usersSnapshot?.docs.map((user) => user.data().nickname === neededUsername)
 		) {
-			return true;
+			alert("no");
 		} else {
-			alert("Either chat already exists or the user doesn't exist");
+			return true;
 		}
 	};
 
@@ -34,10 +34,12 @@ const AddChat = ({ navigation }) => {
 		if (!input) {
 			return null;
 		} else {
-			if (input !== user.displayName && !chatAndUserExist(input)) {
+			if (input !== user.displayName && chatAndUserExist(input)) {
 				db.collection("chats").add({
 					users: [user.displayName, input],
+					chatName: input,
 				});
+				navigation.goBack();
 			}
 		}
 	};

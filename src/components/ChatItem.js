@@ -1,26 +1,31 @@
 import { View, Text } from "react-native";
 import { ListItem, Avatar } from "react-native-elements";
 import React from "react";
-import { auth } from "../../dbConfig";
+import { auth, db } from "../../dbConfig";
 
-const ChatItem = ({ id, chatName, chatLog }) => {
+const ChatItem = ({ id, chatName, users, enterChat }) => {
+	const curUser = users.filter((otherUser) => otherUser.nickname !== chatName);
+
 	return (
-		<ListItem>
+		<ListItem
+			onPress={() => enterChat(id, chatName)}
+			key={id}
+			bottomDivider>
 			<Avatar
 				rounded
 				source={{
 					uri:
-						auth.currentUser?.photoURL ||
+						curUser?.photoURL ||
 						"https://cencup.com/wp-content/uploads/2021/07/avatar-placeholder.png",
 				}}
 			/>
 			<ListItem.Content>
-				<ListItem.Title style={{ fontWeight: "800" }}>Test</ListItem.Title>
+				<ListItem.Title style={{ fontWeight: "800" }}>
+					{chatName}
+				</ListItem.Title>
 				<ListItem.Subtitle
 					numberOfLines={1}
-					style={{ color: "grey" }}>
-					TestingTestingTestingTestingTestingTestingTestingTestingTesting
-				</ListItem.Subtitle>
+					style={{ color: "grey" }}></ListItem.Subtitle>
 			</ListItem.Content>
 		</ListItem>
 	);
